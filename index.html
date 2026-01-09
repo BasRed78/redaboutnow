@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Red About Now - Strategy, Brand, Building</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #0A0A0A;
+            --color-bg-elevated: #0F0F0F;
+            --color-bg-card: #141414;
+            --color-text: #F5F0E8;
+            --color-text-muted: #8A8580;
+            --color-red: #E8432D;
+            --color-red-dark: #C93820;
+            --color-red-light: #FF5C45;
+            
+            --font-display: 'Space Grotesk', system-ui, sans-serif;
+            --font-body: 'DM Sans', system-ui, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 18px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Grain overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1.25rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: var(--color-bg);
+            border-bottom: 1px solid rgba(245, 240, 232, 0.06);
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+        }
+
+        nav.hidden {
+            transform: translateY(-100%);
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--color-red);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--color-text-muted);
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-text);
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            background: var(--color-red);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 8rem 3rem 6rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(160deg, transparent 0%, rgba(0,0,0,0.2) 100%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-eyebrow {
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeUp 0.6s ease forwards 0.2s;
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 8vw, 6.5rem);
+            font-weight: 700;
+            line-height: 1.0;
+            letter-spacing: -0.03em;
+            margin-bottom: 2.5rem;
+            max-width: 900px;
+            color: #fff;
+        }
+
+        .hero-title .line {
+            display: block;
+            opacity: 0;
+            animation: fadeUp 0.7s ease forwards;
+        }
+
+        .hero-title .line:nth-child(1) { animation-delay: 0.3s; }
+        .hero-title .line:nth-child(2) { animation-delay: 0.4s; }
+        .hero-title .line:nth-child(3) { animation-delay: 0.5s; }
+
+        .hero-title em {
+            font-style: italic;
+            font-weight: 400;
+        }
+
+        .hero-sub {
+            font-size: 1.15rem;
+            color: rgba(255,255,255,0.85);
+            max-width: 540px;
+            line-height: 1.7;
+            opacity: 0;
+            animation: fadeUp 0.6s ease forwards 0.6s;
+        }
+
+        .hero-sub strong {
+            color: #fff;
+            font-weight: 500;
+        }
+
+        /* Section basics */
+        section {
+            padding: 7rem 3rem;
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-family: var(--font-display);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--color-red);
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 2.75rem);
+            font-weight: 600;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            margin-bottom: 2.5rem;
+        }
+
+        /* Now Section */
+        .now {
+            background: var(--color-bg);
+            border-bottom: 1px solid rgba(245, 240, 232, 0.06);
+        }
+
+        .now-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: rgba(245, 240, 232, 0.08);
+        }
+
+        .now-card {
+            background: var(--color-bg);
+            padding: 2.5rem;
+            transition: background 0.3s ease;
+        }
+
+        .now-card:hover {
+            background: var(--color-bg-elevated);
+        }
+
+        .now-org {
+            font-family: var(--font-display);
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--color-red);
+            margin-bottom: 0.75rem;
+        }
+
+        .now-role {
+            font-family: var(--font-display);
+            font-size: 1.35rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .now-desc {
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+            line-height: 1.7;
+        }
+
+        /* Red divider strip */
+        .red-strip {
+            background: var(--color-red);
+            padding: 4rem 3rem;
+        }
+
+        .red-strip-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .red-strip-stat {
+            text-align: center;
+            color: #fff;
+        }
+
+        .red-strip-number {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 0.4rem;
+        }
+
+        .red-strip-label {
+            font-family: var(--font-display);
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        /* Track Record */
+        .track {
+            background: var(--color-bg-elevated);
+        }
+
+        .track-intro {
+            max-width: 680px;
+            color: var(--color-text-muted);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 4rem;
+        }
+
+        .track-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .track-item {
+            border-left: 3px solid var(--color-red);
+            padding-left: 1.5rem;
+        }
+
+        .track-brand {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+        }
+
+        .track-role {
+            font-size: 0.85rem;
+            color: var(--color-red);
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+
+        .track-detail {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            line-height: 1.6;
+        }
+
+        /* Projects Section */
+        .projects {
+            background: var(--color-bg);
+        }
+
+        .projects-intro {
+            max-width: 600px;
+            color: var(--color-text-muted);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 3.5rem;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background: var(--color-bg-card);
+            border-radius: 2px;
+            padding: 2.5rem;
+            position: relative;
+            border: 1px solid rgba(245, 240, 232, 0.04);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            border-color: rgba(245, 240, 232, 0.1);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+        }
+
+        .project-card.fortitude::before { background: #5B8F8F; }
+        .project-card.goos::before { background: #b87a4d; }
+        .project-card.seen::before { background: #ff6b5b; }
+        .project-card.billy::before { background: #B8354A; }
+
+        .project-status {
+            display: inline-block;
+            font-family: var(--font-display);
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 0.4rem 0.75rem;
+            border-radius: 2px;
+            margin-bottom: 1.25rem;
+        }
+
+        .project-card.fortitude .project-status { background: rgba(91, 143, 143, 0.2); color: #5B8F8F; }
+        .project-card.goos .project-status { background: rgba(184, 122, 77, 0.2); color: #b87a4d; }
+        .project-card.seen .project-status { background: rgba(255, 107, 91, 0.2); color: #ff6b5b; }
+        .project-card.billy .project-status { background: rgba(184, 53, 74, 0.2); color: #B8354A; }
+
+        .project-name {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .project-tagline {
+            font-style: italic;
+            color: var(--color-text-muted);
+            margin-bottom: 1.25rem;
+            font-size: 0.95rem;
+        }
+
+        .project-desc {
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+            line-height: 1.7;
+        }
+
+        .project-note {
+            margin-top: 1.25rem;
+            padding: 1rem 1.25rem;
+            background: rgba(245, 240, 232, 0.03);
+            border-left: 2px solid rgba(245, 240, 232, 0.2);
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            font-style: italic;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-top: 1.25rem;
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--color-text);
+            transition: gap 0.2s ease;
+        }
+
+        .project-link:hover {
+            gap: 0.6rem;
+            color: var(--color-red);
+        }
+
+        .project-link svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* SEEN */
+
+        /* About Section */
+        .about {
+            background: var(--color-bg-elevated);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 5rem;
+        }
+
+        .about-text p {
+            font-size: 1.05rem;
+            color: var(--color-text-muted);
+            line-height: 1.75;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text p:first-of-type {
+            font-size: 1.2rem;
+            color: var(--color-text);
+        }
+
+        .about-aside {
+            padding-top: 0.5rem;
+        }
+
+        .aside-block {
+            margin-bottom: 2.5rem;
+            padding-left: 1.25rem;
+            border-left: 3px solid var(--color-red);
+        }
+
+        .aside-label {
+            font-family: var(--font-display);
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--color-red);
+            margin-bottom: 0.75rem;
+        }
+
+        .aside-content {
+            font-size: 0.95rem;
+            color: var(--color-text-muted);
+            line-height: 1.7;
+        }
+
+        .aside-content strong {
+            color: var(--color-text);
+            font-weight: 500;
+        }
+
+        /* Contact */
+        .contact {
+            background: var(--color-red);
+            color: #fff;
+        }
+
+        .contact .section-label {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .contact .section-title {
+            color: #fff;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 5rem;
+            align-items: start;
+        }
+
+        .contact-main p {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.85);
+            line-height: 1.7;
+            margin-bottom: 2.5rem;
+            max-width: 480px;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 500;
+            color: #fff;
+            transition: all 0.2s ease;
+        }
+
+        .contact-link:hover {
+            transform: translateX(4px);
+        }
+
+        .contact-link svg {
+            width: 18px;
+            height: 18px;
+            opacity: 0.7;
+        }
+
+        .contact-aside {
+            padding-top: 0.5rem;
+        }
+
+        .contact-detail {
+            margin-bottom: 1.75rem;
+        }
+
+        .contact-detail-label {
+            font-family: var(--font-display);
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 0.4rem;
+        }
+
+        .contact-detail-value {
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--color-bg);
+            padding: 2rem 3rem;
+            border-top: 1px solid rgba(245, 240, 232, 0.06);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        footer p {
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--color-red);
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            nav { padding: 1rem 2rem; }
+            section { padding: 5rem 2rem; }
+            .hero { padding: 6rem 2rem 4rem; }
+            .red-strip { padding: 3rem 2rem; }
+            
+            .now-grid { grid-template-columns: 1fr; background: none; gap: 1rem; }
+            .now-card { background: var(--color-bg-card); border-radius: 2px; }
+            .track-grid { grid-template-columns: repeat(2, 1fr); }
+            .projects-grid { grid-template-columns: 1fr; }
+            .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+        }
+
+        @media (max-width: 640px) {
+            html { font-size: 16px; }
+            .nav-links { display: none; }
+            .hero-title { font-size: 2.5rem; }
+            .track-grid { grid-template-columns: 1fr; }
+            .red-strip-content { justify-content: center; }
+            .red-strip-stat { flex: 1 1 40%; }
+            footer { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <nav id="navbar">
+        <a href="#" class="logo">Red About Now</a>
+        <div class="nav-links">
+            <a href="#now">Now</a>
+            <a href="#track">Track Record</a>
+            <a href="#projects">Projects</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <p class="hero-eyebrow">Strategy · Brand · Building</p>
+            <h1 class="hero-title">
+                <span class="line">I make brands</span>
+                <span class="line"><em>make sense</em> - then</span>
+                <span class="line">help them move.</span>
+            </h1>
+            <p class="hero-sub">
+                25 years connecting worlds that don't usually talk to each other. Luxury design. Sustainable construction. Emerging tech. Dutch directness, British subtlety, global perspective.
+            </p>
+        </div>
+    </section>
+
+    <section class="now" id="now">
+        <div class="section-container">
+            <p class="section-label">Now</p>
+            <h2 class="section-title">Where I'm spending my time</h2>
+        </div>
+        <div class="section-container">
+            <div class="now-grid">
+                <div class="now-card fade-in">
+                    <p class="now-org">Red About Now</p>
+                    <h3 class="now-role">Interim Marketing Roles</h3>
+                    <p class="now-desc">
+                        Hands-on marketing leadership when you need it, not forever. Structure where there's chaos, clarity where there's waffle, calm where there's panic.
+                    </p>
+                </div>
+                <div class="now-card fade-in">
+                    <p class="now-org">The Wolfgang Project</p>
+                    <h3 class="now-role">Co-founder</h3>
+                    <p class="now-desc">
+                        Brand, strategy and marketing for AI and Web3 founders. Equity-based, so we're selective. Three co-founders, a network of specialists, and a few ventures of our own.
+                    </p>
+                </div>
+                <div class="now-card fade-in">
+                    <p class="now-org">Finch Buildings</p>
+                    <h3 class="now-role">Strategic Advisor</h3>
+                    <p class="now-desc">
+                        After three years as Marketing Director, I've moved to an advisory role-sparring with the founder, shaping long-term brand strategy, coaching the team. Still here because solving the housing crisis with timber isn't just good business.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="red-strip">
+        <div class="red-strip-content">
+            <div class="red-strip-stat">
+                <p class="red-strip-number">25+</p>
+                <p class="red-strip-label">Years</p>
+            </div>
+            <div class="red-strip-stat">
+                <p class="red-strip-number">5</p>
+                <p class="red-strip-label">Continents</p>
+            </div>
+            <div class="red-strip-stat">
+                <p class="red-strip-number">12+</p>
+                <p class="red-strip-label">Industries</p>
+            </div>
+            <div class="red-strip-stat">
+                <p class="red-strip-number">30+</p>
+                <p class="red-strip-label">Campaigns</p>
+            </div>
+        </div>
+    </div>
+
+    <section class="track" id="track">
+        <div class="section-container">
+            <p class="section-label">Track Record</p>
+            <h2 class="section-title">Some places I've been</h2>
+            <p class="track-intro">
+                I've run F1 cars down airport runways and through sleepy villages, launched shows watched by millions, and worked in a world where the client brief is simply: 'you should know'. Each role taught me something different about how brands work and people operate when excellence is assumed.
+            </p>
+            <div class="track-grid">
+                <div class="track-item fade-in">
+                    <h3 class="track-brand">Studio Piet Boon</h3>
+                    <p class="track-role">Director Sales & Marketing</p>
+                    <p class="track-detail">
+                        Global high-end design studio. Rosewood Hotels, Michelin-star restaurants, private residences from Verbier to Aspen. Years learning what quality actually means.
+                    </p>
+                </div>
+                <div class="track-item fade-in">
+                    <h3 class="track-brand">Vodafone</h3>
+                    <p class="track-role">Brand Activation Manager</p>
+                    <p class="track-detail">
+                        McLaren F1 sponsorship. The Voice of Holland. Media and Entertainment. Impact and ROI. Five years of big-budget brand theatre.
+                    </p>
+                </div>
+                <div class="track-item fade-in">
+                    <h3 class="track-brand">G3 Group</h3>
+                    <p class="track-role">Commercial Director → Head of Marketing</p>
+                    <p class="track-detail">
+                        Flexible spaces and event accommodation across five continents. Proper international, big audiences, JIT logistics, brand partnerships, live entertainment and hospitality in the most unlikely locations.
+                    </p>
+                </div>
+                <div class="track-item fade-in">
+                    <h3 class="track-brand">Orange / T-Mobile</h3>
+                    <p class="track-role">Marketing & Sponsorship</p>
+                    <p class="track-detail">
+                        Orange Music with Universal. Relaunching Ben as a challenger brand. Early career in telecoms-where I learned to move fast and explain things simply.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="projects" id="projects">
+        <div class="section-container">
+            <p class="section-label">Projects</p>
+            <h2 class="section-title">Things I'm building</h2>
+            <p class="projects-intro">
+                Beyond client work, I build things. Some strategic, some deeply personal. All addressing gaps I've seen-or lived.
+            </p>
+            <div class="projects-grid">
+                <!-- Fortitude -->
+                <div class="project-card fortitude fade-in">
+                    <span class="project-status">Launching 2026</span>
+                    <h3 class="project-name">Fortitude</h3>
+                    <p class="project-tagline">For young men with and after cancer.</p>
+                    <p class="project-desc">
+                        Brand and marketing strategy for the F|Fort Foundation's new initiative, together with <a href="https://www.linkedin.com/in/joachimbaan/" target="_blank" style="color: var(--color-text); text-decoration: underline; text-underline-offset: 2px;">Joachim Baan</a>. A project that is deeply personal to me. Young men don't fit existing support systems, so we are building something that does.
+                    </p>
+                    <a href="https://ffortfoundation.nl" target="_blank" class="project-link">
+                        F|Fort Foundation
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- GOOS -->
+                <div class="project-card goos fade-in">
+                    <span class="project-status">In Development</span>
+                    <h3 class="project-name">GOOS.</h3>
+                    <p class="project-tagline">Niet alleen. Ook als het wel zo voelt.</p>
+                    <p class="project-desc">
+                        A digital companion for young men with cancer. Proactive-it checks in, doesn't wait. Trained on everything AYAs actually face: fertility, relationships, work, fear of recurrence, Dutch healthcare bureaucracy. Direct. No platitudes.
+                    </p>
+                    <p class="project-note">
+                        I was diagnosed at 30. GOOS is what I wish I'd had.
+                    </p>
+                    <a href="https://goos-phi.vercel.app" target="_blank" class="project-link">
+                        Visit site
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- SEEN - Mysterious -->
+                <div class="project-card seen fade-in">
+                    <span class="project-status">Coming January 2026</span>
+                    <h3 class="project-name">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="#ff6b5b">
+                            <path d="M12 0L13.5 10.5L24 12L13.5 13.5L12 24L10.5 13.5L0 12L10.5 10.5L12 0Z"/>
+                        </svg>
+                        Seen
+                    </h3>
+                    <p class="project-tagline">See the pattern. Break the cycle.</p>
+                    <p class="project-desc">
+                        Something I've been building. For people who keep ending up in the same place and don't understand why.
+                    </p>
+                    <a href="https://seeyourself.today" target="_blank" class="project-link">
+                        seeyourself.today
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Billy -->
+                <div class="project-card billy fade-in">
+                    <span class="project-status">Live</span>
+                    <h3 class="project-name">Billy</h3>
+                    <p class="project-tagline">AI companion for elderly care.</p>
+                    <p class="project-desc">
+                        Built for my father - 80, stroke survivor, stubborn Brit who wants to write a book but can't type easily. Voice-first and one-handed use. Meets him through his hobbies, helps him capture stories, and shapes them into something he can use. Personality inspired by Billy Connolly - warm, sharp, and allergic to bullshit.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <div class="section-container">
+            <p class="section-label">About</p>
+            <h2 class="section-title">The short version</h2>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>
+                        Half British, half Dutch. Grew up between two countries and cultures that approach problems very differently - one apologises before giving feedback, the other gives it without waiting for permission. I've learned to do both.
+                    </p>
+                    <p>
+                        My career looks like someone couldn't make up their mind, but there's a thread: I like exploring new or complex situations where the brand, marketing or teams need work. Telecoms, luxury design, sustainable construction, emerging tech.
+                    </p>
+                    <p>
+                        Each time, the job was the same: cut through complexity, help teams move with focus. Whether that's defining positioning, leading through change or building a marketing function from scratch. Often when things are moving fast, not quite clear or too important to get wrong. I bring structure where there's chaos, creative thinking where there's noise, and calm momentum when everyone's spinning.
+                    </p>
+                    <p>
+                        I build things now too. Partly because I can, partly because I've seen gaps that annoyed me enough to do something about them. GOOS and SEEN both came from personal experience. Billy came from watching my father struggle with loneliness and refusing to accept it.
+                    </p>
+                    <p>
+                        Based in Amsterdam. London and LA feel like second homes. Happiest when I'm slightly out of my depth and working with people who care more about getting it right than getting credit.
+                    </p>
+                </div>
+                <div class="about-aside">
+                    <div class="aside-block">
+                        <p class="aside-label">Outside work</p>
+                        <p class="aside-content">
+                            Anything with an engine. My old Honda Africa Twin doesn't get out enough. Aviation nerd, will happily watch planes land for hours. A Cane Corso called Nala who's the calm guardian of the household.
+                        </p>
+                    </div>
+                    <div class="aside-block">
+                        <p class="aside-label">Design & Culture</p>
+                        <p class="aside-content">
+                            Fashion, art, the places where design meets function. Years at Piet Boon left a mark. Music taste best described as eclectic, as long as it's got soul.
+                        </p>
+                    </div>
+                    <div class="aside-block">
+                        <p class="aside-label">Storytelling</p>
+                        <p class="aside-content">
+                            Books, film, television. Interested in how stories work, how they come to life, why some land and others don't. Maybe one day, if I am lucky, I could make my own.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <div class="section-container">
+            <p class="section-label">Contact</p>
+            <h2 class="section-title">Let's talk.</h2>
+            <div class="contact-grid">
+                <div class="contact-main">
+                    <p>
+                        Whether you're scaling up, repositioning, launching something new or just trying to figure out what your brand or team needs; I'm always happy to have a conversation.
+                    </p>
+                    <div class="contact-links">
+                        <a href="mailto:bas@redaboutnow.com" class="contact-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                            </svg>
+                            bas@redaboutnow.com
+                        </a>
+                        <a href="https://wa.me/31646060179" class="contact-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
+                            </svg>
+                            WhatsApp
+                        </a>
+                        <a href="https://linkedin.com/in/basredhead" target="_blank" class="contact-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                            LinkedIn
+                        </a>
+                    </div>
+                </div>
+                <div class="contact-aside">
+                    <div class="contact-detail">
+                        <p class="contact-detail-label">Based in</p>
+                        <p class="contact-detail-value">Amsterdam, Netherlands</p>
+                    </div>
+                    <div class="contact-detail">
+                        <p class="contact-detail-label">Also home</p>
+                        <p class="contact-detail-value">London · Los Angeles</p>
+                    </div>
+                    <div class="contact-detail">
+                        <p class="contact-detail-label">Availability</p>
+                        <p class="contact-detail-value">Open to fractional/interim roles and advisory</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Red About Now</p>
+    </footer>
+
+    <script>
+        // Hide nav on scroll down, show on scroll up
+        let lastScroll = 0;
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll <= 0) {
+                navbar.classList.remove('hidden');
+                return;
+            }
+            
+            if (currentScroll > lastScroll && currentScroll > 100) {
+                navbar.classList.add('hidden');
+            } else {
+                navbar.classList.remove('hidden');
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // Scroll reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
