@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --color-bg: #3D4F5A;
+            --color-bg: #243238;
             --color-bg-elevated: #334450;
             --color-bg-card: #475B68;
             --color-text: #FAF8F5;
@@ -105,7 +105,7 @@
         }
 
         .nav-links a:hover {
-            color: #3D4F5A;
+            color: #243238;
         }
 
         /* HERO */
@@ -229,7 +229,7 @@
         }
 
         .now .section-title {
-            color: #3D4F5A;
+            color: #243238;
         }
 
         .now-grid {
@@ -274,7 +274,7 @@
             font-size: 1.35rem;
             font-weight: 600;
             margin-bottom: 1rem;
-            color: #3D4F5A;
+            color: #243238;
         }
 
         .now-desc {
@@ -339,7 +339,7 @@
             background: 
                 radial-gradient(ellipse at 10% 90%, rgba(232,67,45,0.06) 0%, transparent 40%),
                 radial-gradient(ellipse at 90% 10%, rgba(255,255,255,0.03) 0%, transparent 40%),
-                var(--color-bg-elevated);
+                #243238;
             position: sticky;
             top: 0;
             z-index: 1;
@@ -402,18 +402,25 @@
         /* Projects Section */
         .projects {
             background: 
-                radial-gradient(ellipse at 80% 80%, rgba(232,67,45,0.05) 0%, transparent 50%),
-                radial-gradient(ellipse at 20% 20%, rgba(255,255,255,0.03) 0%, transparent 40%),
-                var(--color-bg);
+                radial-gradient(ellipse at 80% 80%, rgba(61,79,90,0.04) 0%, transparent 50%),
+                #FAF8F5;
             position: sticky;
             top: 0;
             z-index: 2;
             box-shadow: 0 -30px 50px -10px rgba(0,0,0,0.4);
         }
 
+        .projects .section-label {
+            color: var(--color-red);
+        }
+
+        .projects .section-title {
+            color: #243238;
+        }
+
         .projects-intro {
             max-width: 600px;
-            color: var(--color-text-muted);
+            color: #5A7080;
             font-size: 1.05rem;
             line-height: 1.7;
             margin-bottom: 3.5rem;
@@ -431,7 +438,7 @@
             padding: 2rem 0;
             position: relative;
             border: none;
-            border-top: 1px solid rgba(245, 240, 232, 0.1);
+            border-top: 1px solid rgba(36, 50, 56, 0.1);
             transition: all 0.3s ease;
         }
 
@@ -441,7 +448,7 @@
         }
 
         .project-card:hover {
-            background: rgba(245, 240, 232, 0.02);
+            background: rgba(36, 50, 56, 0.03);
         }
 
         .project-card.fade-in {
@@ -487,7 +494,7 @@
             padding: 0;
             border-radius: 0;
             margin-bottom: 0;
-            color: var(--color-text-muted);
+            color: #5A7080;
             background: none;
             order: -1;
         }
@@ -505,6 +512,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            color: #243238;
         }
 
         .project-body {
@@ -513,14 +521,14 @@
 
         .project-tagline {
             font-style: italic;
-            color: var(--color-text-muted);
+            color: #5A7080;
             margin-bottom: 0.5rem;
             font-size: 0.9rem;
         }
 
         .project-desc {
             font-size: 0.85rem;
-            color: var(--color-text-muted);
+            color: #5A7080;
             line-height: 1.65;
         }
 
@@ -530,7 +538,7 @@
             background: none;
             border-left: none;
             font-size: 0.8rem;
-            color: var(--color-text-muted);
+            color: #5A7080;
             font-style: italic;
             opacity: 0.8;
         }
@@ -543,7 +551,7 @@
             font-family: var(--font-display);
             font-size: 0.75rem;
             font-weight: 500;
-            color: var(--color-text);
+            color: #243238;
             transition: all 0.2s ease;
         }
 
@@ -788,7 +796,7 @@
         }
 
         .footer-links a:hover {
-            color: #3D4F5A;
+            color: #243238;
         }
 
         .footer-links a:hover {
@@ -1025,7 +1033,7 @@
                     <div class="project-body">
                         <p class="project-tagline">For young men with and after cancer.</p>
                         <p class="project-desc">
-                            Brand and marketing strategy for the F|Fort Foundation's new initiative, together with <a href="https://www.linkedin.com/in/joachimbaan/" target="_blank" style="color: var(--color-text); text-decoration: underline; text-underline-offset: 2px;">Joachim Baan</a>. A project deeply personal to me. Young men don't fit existing support systems, so we're building something that does.
+                            Brand and marketing strategy for the F|Fort Foundation's new initiative, together with <a href="https://www.linkedin.com/in/joachimbaan/" target="_blank" style="color: #243238; text-decoration: underline; text-underline-offset: 2px;">Joachim Baan</a>. A project deeply personal to me. Young men don't fit existing support systems, so we're building something that does.
                         </p>
                         <a href="https://ffortfoundation.nl" target="_blank" class="project-link">
                             F|Fort Foundation
