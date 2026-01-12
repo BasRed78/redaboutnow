@@ -1250,33 +1250,70 @@
         updateStickyOffsets();
         window.addEventListener('resize', updateStickyOffsets);
 
-        // Easter egg: Play song on headshot hover (after any page interaction)
+        // Easter egg: Click to unlock, then hover to play/pause
         const headshot = document.querySelector('.contact-headshot');
-        let iframe = null;
-        let audioUnlocked = false;
+        let player = null;
+        let playerReady = false;
+        let unlocked = false;
 
-        // Any click on page unlocks audio capability
-        document.addEventListener('click', function() {
-            audioUnlocked = true;
-        }, { once: false });
+        // Create player container
+        const playerDiv = document.createElement('div');
+        playerDiv.id = 'yt-player';
+        playerDiv.className = 'youtube-player';
+        headshot.appendChild(playerDiv);
 
+        // Load YouTube API
+        const tag = document.createElement('script');
+        tag.src = 'https://www.youtube.com/iframe_api';
+        document.body.appendChild(tag);
+
+        window.onYouTubeIframeAPIReady = function() {
+            player = new YT.Player('yt-player', {
+                height: '1',
+                width: '1',
+                videoId: 'FMrIy9zm7QY',
+                playerVars: {
+                    autoplay: 0,
+                    controls: 0,
+                    disablekb: 1,
+                    fs: 0,
+                    modestbranding: 1,
+                    rel: 0
+                },
+                events: {
+                    onReady: function() {
+                        playerReady = true;
+                    },
+                    onStateChange: function(e) {
+                        if (e.data === YT.PlayerState.PLAYING) {
+                            headshot.classList.add('playing');
+                        } else {
+                            headshot.classList.remove('playing');
+                        }
+                    }
+                }
+            });
+        };
+
+        // First click unlocks and starts playing
+        headshot.addEventListener('click', function() {
+            if (playerReady && player && !unlocked) {
+                player.playVideo();
+                unlocked = true;
+            }
+        });
+
+        // After unlock, hover controls playback
         headshot.addEventListener('mouseenter', function() {
-            if (audioUnlocked && !iframe) {
-                iframe = document.createElement('iframe');
-                iframe.className = 'youtube-player';
-                iframe.src = 'https://www.youtube.com/embed/FMrIy9zm7QY?autoplay=1&start=0';
-                iframe.allow = 'autoplay';
-                headshot.appendChild(iframe);
-                headshot.classList.add('playing');
+            if (playerReady && player && unlocked) {
+                player.playVideo();
             }
         });
 
         headshot.addEventListener('mouseleave', function() {
-            if (iframe) {
-                iframe.remove();
-                iframe = null;
+            if (playerReady && player && unlocked) {
+                player.pauseVideo();
             }
-            headshot.classList.remove('playing');
         });
     </script>
 </body>
