@@ -750,32 +750,6 @@
             filter: saturate(0.35);
         }
 
-        .contact-headshot::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 60px;
-            transform: translate(-50%, -50%);
-            width: 0;
-            height: 0;
-            border-left: 18px solid rgba(255,255,255,0.9);
-            border-top: 11px solid transparent;
-            border-bottom: 11px solid transparent;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-        }
-
-        @media (hover: hover) {
-            .contact-headshot:hover::after {
-                opacity: 1;
-            }
-        }
-
-        .contact-headshot.unlocked::after {
-            display: none;
-        }
-
         .contact-headshot:hover img {
             border-color: rgba(255,255,255,0.4);
             transform: scale(1.05);
