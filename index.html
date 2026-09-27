@@ -35,11 +35,11 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--slate);outline-offs
 .on-red a:focus-visible,.on-red button:focus-visible,.nav-dark a:focus-visible{outline-color:var(--white)}
 
 /* dots: the brand device, also the status system */
-.dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--red);flex:none}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--red);color:var(--red);flex:none}
 .dot.ring{background:transparent;border:2px solid var(--red)}
 .dot.dash{background:transparent;border:2px dashed var(--red);animation:spin 12s linear infinite}
 .dot.live{animation:pulseRed 2.4s ease-out infinite}
-.on-red .dot{background:var(--white)}
+.on-red .dot{background:var(--white);color:var(--white)}
 .on-red .dot.ring{background:transparent;border-color:var(--white)}
 .on-red .dot.live,.nav.nav-dark .dot.live{animation-name:pulseWhite}
 @keyframes pulseRed{0%{box-shadow:0 0 0 0 rgba(210,46,30,.5)}70%{box-shadow:0 0 0 10px rgba(210,46,30,0)}100%{box-shadow:0 0 0 0 rgba(210,46,30,0)}}
@@ -47,8 +47,10 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--slate);outline-offs
 @keyframes pulseFlare{0%{box-shadow:0 0 0 0 rgba(255,92,69,.55)}70%{box-shadow:0 0 0 10px rgba(255,92,69,0)}100%{box-shadow:0 0 0 0 rgba(255,92,69,0)}}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes beat{0%{transform:scale(1.45)}100%{transform:scale(1)}}
-/* Easter egg: while the track plays, every dot on the page keeps the beat */
-body.party .dot{animation:beat .4s ease-out infinite !important}
+/* Easter egg: while the track plays, every dot on the page hits the beat.
+   The script sets --bs (scale), --br/--ba (ring size and strength) from the track's
+   playback position at 152.6 BPM, with a bigger hit on the first beat of each bar. */
+body.party .dot{animation:none !important;transition:none !important;border-style:solid;transform:scale(var(--bs,1));box-shadow:0 0 0 var(--br,0px) color-mix(in srgb,currentColor calc(var(--ba,0) * 100%),transparent)}
 
 .status{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600}
 
@@ -56,7 +58,7 @@ body.party .dot{animation:beat .4s ease-out infinite !important}
 .nav{position:sticky;top:0;z-index:10;background:var(--nav-bg,var(--red));color:var(--nav-fg,var(--white));box-shadow:var(--nav-shadow,none);transition:background .3s ease,color .3s ease,box-shadow .3s ease}
 .nav .wrap{height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;gap:24px}
 .logo{display:flex;align-items:baseline;gap:3px;text-decoration:none;font-size:24px;font-weight:800;letter-spacing:-.02em;white-space:nowrap}
-.logo .dot,.pill .dot{width:8px;height:8px;background:var(--nav-dot,var(--white))}
+.logo .dot,.pill .dot{width:8px;height:8px;background:var(--nav-dot,var(--white));color:var(--nav-dot,var(--white))}
 .pill .dot.ring{background:transparent;border:1.5px solid var(--nav-dot,var(--white))}
 .nav nav{display:flex;align-items:center;gap:30px;font-size:16px;font-weight:500}
 .nav-link{position:relative;display:flex;align-items:center;min-height:44px;text-decoration:none}
@@ -71,7 +73,7 @@ body.party .dot{animation:beat .4s ease-out infinite !important}
 .hero h1 .line{display:flex;flex-wrap:wrap;column-gap:.26em;align-items:baseline}
 .hero h1 .serif{font-family:var(--serif);font-style:italic;font-weight:400;font-size:1.09em;letter-spacing:-.01em}
 .hero h1 .stop{display:inline-block;width:.19em;height:.19em;margin-left:.05em;border-radius:50%;background:var(--white);animation:drop .6s cubic-bezier(.3,1.7,.5,1) .7s both,pulseWhite 2.4s ease-out 1.4s infinite}
-body.party .hero h1 .stop{animation:beat .4s ease-out infinite}
+body.party .hero h1 .stop{animation:none}
 @keyframes drop{from{transform:translateY(-.7em) scale(0)}to{transform:none}}
 .hero .intro{max-width:620px;display:flex;flex-direction:column;gap:26px}
 .hero .intro p{font-size:21px;line-height:1.45}
@@ -132,7 +134,20 @@ body.party .hero h1 .stop{animation:beat .4s ease-out infinite}
 .about .side p{font-size:17px;line-height:1.6;color:var(--muted)}
 
 /* contact */
-.contact{background:var(--red);color:var(--white)}
+.contact{position:relative;overflow:hidden;background:var(--red);color:var(--white)}
+.contact::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;background:radial-gradient(circle at var(--gx,75%) var(--gy,35%),rgba(255,255,255,.28),rgba(255,255,255,0) 42%)}
+.contact .wrap{position:relative}
+.big .ch{display:inline-block}
+/* Easter egg choreography, all driven by the beat variables the script sets */
+body.beatsync .contact::before{opacity:calc(var(--b1,0) * .9)}
+body.beatsync .contact .wrap{transform:translateY(var(--nod,0px))}
+body.beatsync .contact .btn{transform:rotate(var(--rock,0deg)) scale(calc(1 + var(--b1,0) * .04))}
+body.beatsync .contact .time{display:inline-block;transform:translateY(calc(var(--b1,0) * -7px))}
+body.beatsync .availability{transform:translateX(calc(var(--b2,0) * 4px))}
+.spark{position:absolute;left:60px;top:60px;width:var(--s,10px);height:var(--s,10px);margin:calc(var(--s,10px) / -2) 0 0 calc(var(--s,10px) / -2);border-radius:50%;background:var(--white);pointer-events:none;animation:spark .95s cubic-bezier(.15,.7,.3,1) forwards}
+@keyframes spark{from{transform:translate(0,0) scale(1);opacity:1}to{transform:translate(var(--dx),var(--dy)) scale(.15);opacity:0}}
+.wave{position:absolute;left:60px;top:60px;width:120px;height:120px;margin:-60px 0 0 -60px;border:2px solid rgba(255,255,255,.75);border-radius:50%;pointer-events:none;animation:wave 1.5s cubic-bezier(.1,.6,.3,1) forwards}
+@keyframes wave{from{transform:scale(1);opacity:.85}to{transform:scale(8);opacity:0}}
 .contact .wrap{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:96px}
 .contact .left{display:flex;flex-direction:column;gap:28px}
 .contact .big{font-size:96px;font-weight:800;letter-spacing:-.035em;line-height:1}
@@ -141,16 +156,22 @@ body.party .hero h1 .stop{animation:beat .4s ease-out infinite}
 .buttons .row2{display:flex;flex-wrap:wrap;gap:12px}
 .availability{display:flex;align-items:center;gap:12px;font-size:16px;font-weight:500}
 .contact .right{display:flex;flex-direction:column;gap:28px}
-.egg-wrap{display:flex;align-items:flex-end;gap:18px}
+.egg-wrap{position:relative;display:flex;align-items:flex-end;gap:18px}
 .headshot{position:relative;flex:none;width:120px;height:120px;padding:0;border-radius:50%;border:3px solid rgba(255,255,255,.2);background:none;cursor:pointer;transition:border-color .4s ease,transform .4s ease,box-shadow .4s ease}
 .headshot img{display:block;width:100%;height:100%;border-radius:50%;object-fit:cover;filter:saturate(.35);transition:filter .4s ease}
 .headshot:hover{border-color:rgba(255,255,255,.45);transform:scale(1.03)}
 .headshot.unlocked img{filter:saturate(1)}
 .headshot.playing{border-color:var(--white);transform:scale(1.05);box-shadow:0 0 24px rgba(255,255,255,.5)}
+body.party .headshot.playing{transition:none;transform:rotate(calc(var(--rock,0deg) * 1.6)) scale(calc(1.03 + var(--b1,0) * .1));box-shadow:0 0 calc(12px + var(--b1,0) * 30px) rgba(255,255,255,calc(.25 + var(--b1,0) * .5))}
 .eq{display:none;align-items:flex-end;gap:4px;height:28px;padding-bottom:8px}
 .headshot.playing + .eq{display:flex}
 .eq span{display:block;width:4px;height:28px;border-radius:2px;background:var(--white);transform-origin:50% 100%;animation:eq .8s ease-in-out infinite}
 .eq span:nth-child(2){animation-delay:.2s}.eq span:nth-child(3){animation-delay:.4s}.eq span:nth-child(4){animation-delay:.1s}
+body.beatsync .eq span{animation:none}
+body.beatsync .eq span:nth-child(1){transform:scaleY(calc(.15 + var(--b1,0) * .85))}
+body.beatsync .eq span:nth-child(2){transform:scaleY(calc(.15 + var(--b2,0) * .85))}
+body.beatsync .eq span:nth-child(3){transform:scaleY(calc(.15 + var(--b3,0) * .85))}
+body.beatsync .eq span:nth-child(4){transform:scaleY(calc(.15 + var(--b4,0) * .85))}
 @keyframes eq{0%,100%{transform:scaleY(.25)}50%{transform:scaleY(1)}}
 #yt-player{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden}
 .clock{display:flex;flex-direction:column;gap:6px;padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.4)}
@@ -160,6 +181,7 @@ body.party .hero h1 .stop{animation:beat .4s ease-out infinite}
 .time.big{font-size:72px;line-height:1.05}
 .time.small{font-size:40px}
 .colon{transition:opacity .3s ease}
+body.beatsync .colon{transition:none;opacity:calc(.2 + var(--b1,0) * .8) !important}
 .clock .aside{font-size:21px;line-height:1.4}
 .clocks2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
 .clocks2 div{display:flex;flex-direction:column;gap:4px}
@@ -378,6 +400,7 @@ footer .wrap{padding-top:28px;padding-bottom:calc(28px + env(safe-area-inset-bot
 <footer>
   <div class="wrap">
     <span>© <span id="year">2026</span> Red About Now</span>
+    <span>KvK 86409530, btw-id NL004244282B38</span>
   </div>
 </footer>
 
@@ -465,9 +488,120 @@ footer .wrap{padding-top:28px;padding-bottom:calc(28px + env(safe-area-inset-bot
   var shot = document.querySelector('.headshot');
   var player = null, ready = false, loading = false, unlocked = false, wantPlay = false;
   var hoverCapable = window.matchMedia && window.matchMedia('(hover: hover)').matches;
+  /* beat engine */
+  var BPM = 152.6;       /* tune with ?beat (see below) */
+  var BEAT = 60 / BPM;
+  var BEAT_OFFSET = 0;   /* seconds into the video where a beat lands; tune with ?beat */
+  var BAR_SHIFT = 0;     /* which beat of the four counts as the "one" */
+  var body = document.body, rs = body.style, raf = 0, anchorT = 0, anchorWall = 0;
+  var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mod = function (a, n) { return ((a % n) + n) % n; };
+  function mediaTime() {
+    var now = performance.now();
+    var raw = (player && player.getCurrentTime) ? player.getCurrentTime() : 0;
+    if (!anchorWall) { anchorT = raw; anchorWall = now; return raw; }
+    var pred = anchorT + (now - anchorWall) / 1000;
+    var diff = raw - pred;
+    if (diff > 0.3 || diff < -0.5) { anchorT = raw; anchorWall = now; return raw; } /* a seek or a stall */
+    anchorT += diff * 0.05; /* ease towards the player's clock without jitter */
+    return pred + diff * 0.05;
+  }
+  /* "Let's talk." becomes separate letters so they can bounce in a wave */
+  var big = document.querySelector('.contact .big');
+  big.setAttribute('aria-label', big.textContent);
+  var letters = [];
+  big.textContent.split('').forEach(function (c, i, all) {
+    if (i === 0) big.textContent = '';
+    if (c === ' ') { big.appendChild(document.createTextNode(' ')); return; }
+    var s = document.createElement('span'); s.className = 'ch'; s.textContent = c; s.setAttribute('aria-hidden', 'true');
+    big.appendChild(s); letters.push(s);
+  });
+  var eggWrap = document.querySelector('.egg-wrap'), contact = document.getElementById('contact');
+  var lastBeat = null;
+  function burst(one) {
+    if (document.visibilityState !== 'visible') return;
+    var n = one ? 9 : 3;
+    for (var i = 0; i < n; i++) {
+      var a = Math.random() * Math.PI * 2, d = (one ? 110 : 70) + Math.random() * (one ? 120 : 60);
+      var sp = document.createElement('span'); sp.className = 'spark';
+      sp.style.setProperty('--dx', (Math.cos(a) * d).toFixed(0) + 'px');
+      sp.style.setProperty('--dy', (Math.sin(a) * d).toFixed(0) + 'px');
+      sp.style.setProperty('--s', (one ? 8 + Math.random() * 8 : 6 + Math.random() * 5).toFixed(0) + 'px');
+      sp.addEventListener('animationend', function () { this.remove(); });
+      eggWrap.appendChild(sp);
+    }
+    if (one) {
+      var w = document.createElement('span'); w.className = 'wave';
+      w.addEventListener('animationend', function () { this.remove(); });
+      eggWrap.appendChild(w);
+    }
+  }
+  function frame() {
+    if (!body.classList.contains('party')) { raf = 0; return; }
+    var ph = (mediaTime() - BEAT_OFFSET) / BEAT;
+    var beat = Math.floor(ph), fr = mod(ph, 1);
+    var one = mod(beat - BAR_SHIFT, 4) === 0;
+    var e = Math.exp(-fr * 6);
+    if (beat !== lastBeat) { if (lastBeat !== null) burst(one); lastBeat = beat; }
+    rs.setProperty('--nod', (e * (one ? 7 : 4)).toFixed(2) + 'px');
+    rs.setProperty('--rock', ((mod(beat, 2) ? 1 : -1) * e * 4).toFixed(2) + 'deg');
+    for (var i = 0; i < letters.length; i++) {
+      var lf = mod(ph - i * 0.1, 1);
+      letters[i].style.transform = 'translateY(' + (-Math.exp(-lf * 5) * (one ? 22 : 14)).toFixed(1) + 'px)';
+    }
+    rs.setProperty('--bs', (1 + e * (one ? 1.9 : 1.1)).toFixed(3));
+    rs.setProperty('--br', (e * (one ? 16 : 10)).toFixed(1) + 'px');
+    rs.setProperty('--ba', (e * 0.6).toFixed(3));
+    rs.setProperty('--b1', e.toFixed(3));
+    rs.setProperty('--b2', Math.exp(-mod(ph * 2, 1) * 6).toFixed(3));
+    rs.setProperty('--b3', Math.exp(-mod((ph - BAR_SHIFT) / 4, 1) * 3).toFixed(3));
+    rs.setProperty('--b4', Math.exp(-mod(ph + 0.5, 1) * 6).toFixed(3));
+    raf = requestAnimationFrame(frame);
+  }
   function setPlaying(on) {
     shot.classList.toggle('playing', on);
-    document.body.classList.toggle('party', on);
+    body.classList.toggle('party', on);
+    body.classList.toggle('beatsync', on && !still);
+    if (on && !still && !raf) {
+      var hr = shot.getBoundingClientRect(), cr = contact.getBoundingClientRect();
+      contact.style.setProperty('--gx', ((hr.left + hr.width / 2 - cr.left) / cr.width * 100).toFixed(1) + '%');
+      contact.style.setProperty('--gy', ((hr.top + hr.height / 2 - cr.top) / cr.height * 100).toFixed(1) + '%');
+      anchorWall = 0; lastBeat = null; raf = requestAnimationFrame(frame);
+    }
+    if (!on) {
+      ['--bs', '--br', '--ba', '--b1', '--b2', '--b3', '--b4', '--nod', '--rock'].forEach(function (k) { rs.removeProperty(k); });
+      letters.forEach(function (l) { l.style.transform = ''; });
+    }
+  }
+
+  /* calibration, for Bas only: open the site with ?beat, start the track, then tap B on
+     every kick drum (8 taps is plenty) and D once on the first beat of a bar. Read the
+     numbers off the label and put them in BEAT_OFFSET and BAR_SHIFT above. */
+  if (/[?&]beat\b/.test(location.search)) {
+    var label = document.createElement('div');
+    label.style.cssText = 'position:fixed;left:12px;bottom:12px;z-index:99;padding:8px 12px;border-radius:8px;background:#000;color:#fff;font:13px/1.4 ui-monospace,Menlo,monospace';
+    var show = function (n) { label.textContent = 'BPM ' + BPM.toFixed(2) + ', BEAT_OFFSET ' + BEAT_OFFSET.toFixed(3) + ', BAR_SHIFT ' + BAR_SHIFT + (n ? ' (' + n + ' taps)' : '. Play, then tap B on each kick for 30 seconds, D once on a "one"'); };
+    show(0); body.appendChild(label);
+    var taps = [];
+    document.addEventListener('keydown', function (ev) {
+      if (!ready) return;
+      var k = ev.key.toLowerCase(), t = mediaTime();
+      if (k === 'b') {
+        /* fit a straight line through the taps: slope = beat length (tempo), intercept = offset */
+        taps.push(t); if (taps.length > 64) taps.shift();
+        if (taps.length < 4) { show(taps.length); return; }
+        var t0 = taps[0], n = taps.length, sn = 0, st = 0, snn = 0, snt = 0;
+        taps.forEach(function (ti) { var k2 = Math.round((ti - t0) / BEAT); sn += k2; st += ti; snn += k2 * k2; snt += k2 * ti; });
+        var den = n * snn - sn * sn;
+        if (den > 0) {
+          var slope = (n * snt - sn * st) / den, icpt = (st - slope * sn) / n;
+          if (slope > 0.3 && slope < 0.5) { BEAT = slope; BPM = 60 / slope; BEAT_OFFSET = mod(icpt, BEAT); }
+        }
+        show(n);
+      } else if (k === 'd') {
+        BAR_SHIFT = mod(Math.round((t - BEAT_OFFSET) / BEAT), 4); show(taps.length);
+      }
+    });
   }
   function loadPlayer() {
     if (loading) return;
