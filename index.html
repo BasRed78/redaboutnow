@@ -489,10 +489,10 @@ footer .wrap{padding-top:28px;padding-bottom:calc(28px + env(safe-area-inset-bot
   var player = null, ready = false, loading = false, unlocked = false, wantPlay = false;
   var hoverCapable = window.matchMedia && window.matchMedia('(hover: hover)').matches;
   /* beat engine */
-  var BPM = 152.6;       /* tune with ?beat (see below) */
+  var BPM = 152.62;      /* calibrated by Bas with ?beat, 50 taps */
   var BEAT = 60 / BPM;
-  var BEAT_OFFSET = 0;   /* seconds into the video where a beat lands; tune with ?beat */
-  var BAR_SHIFT = 0;     /* which beat of the four counts as the "one" */
+  var BEAT_OFFSET = 0.018; /* seconds into the video where a beat lands */
+  var BAR_SHIFT = 3;     /* which beat of the four counts as the "one" */
   var body = document.body, rs = body.style, raf = 0, anchorT = 0, anchorWall = 0;
   var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var mod = function (a, n) { return ((a % n) + n) % n; };
